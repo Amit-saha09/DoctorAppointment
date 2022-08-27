@@ -1,0 +1,209 @@
+<div class="row">
+    <div class="col-md-9">
+      <form [formGroup]="form">
+        <div class="row">
+          <div class="col text-center">
+            <div class="form-group col-md-6 ">
+              <label>Month</label>
+              <select #mySelect formControlName="month"
+               (change)="onChangeMonth(mySelect.value)" name="Gender" id="gender"
+              class="form-control">
+              <option selected disabled>Select Month</option>  
+                  <option *ngFor="let month of months"
+                  value={{month.id}}>{{month.month}}</option>
+                  
+                </select>
+            </div>
+          </div>
+          <div class="col text-right">
+            <button  (click)="cretaeDateClick()" 
+        
+            class="btn btn-success">create schedule</button>
+          </div>
+        </div>
+       
+      </form>
+        <full-calendar #fullcalendar [options]="calendarOptions"></full-calendar>
+        
+    </div>
+    <div class="col-md-2">
+        
+    </div>
+</div>
+
+
+
+<!-- Button trigger modal -->
+<button type="button" id="modal_button" [hidden]="true" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+    Launch demo modal
+  </button>
+  
+  <!-- Modal -->
+  <div #test class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">schedule information</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          <label class="col-md-2" for="">firstName:</label>
+          <p class="col-md-4">{{schedulDetails?.firstName}}</p>
+        </div>
+        <div class="row">
+          <label class="col-md-2" for="">LastName:</label>
+          <p class="col-md-4">{{schedulDetails?.lastName}}</p>
+        </div>
+        <div class="row">
+          <label class="col-md-2" for="">Email:</label>
+          <p class="col-md-4">{{schedulDetails?.email}}</p>
+        </div>
+        <div class="row">
+          <label class="col-md-2" for="">Gender:</label>
+          <p class="col-md-4">{{schedulDetails?.gender}}</p>
+        </div>
+        <div class="row">
+          <label class="col-md-2" for="">Age:</label>
+          <p class="col-md-4">{{schedulDetails?.age}}</p>
+        </div>
+        <div class="row">
+          <label class="col-md-2" for="">Date:</label>
+          <p class="col-md-4">{{schedulDetails?.date}}</p>
+        </div>
+        <div class="row">
+          <label class="col-md-2" for="">Time:</label>
+          <p class="col-md-4">{{schedulDetails?.time}}</p>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <button type="button" id="modal_button1" [hidden]="true" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button>
+  
+  <!-- Modal -->
+  <div #test class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cretae</h5>
+          <button type="button" class="btn-close"  (click)="refresh()" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <form [formGroup]="createform" (ngSubmit)="onSubmit()">
+          <div class="form-group row">
+          <label class="col-md-2" for="">firstName:</label>
+          <input
+                                type="text"
+                                formControlName="firstName"
+                                class="form-control col-md-4"
+                                [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"
+                              />
+                              <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+                                <div *ngIf="f['firstName'].errors['required']">First name is required
+                                </div>
+                                <div *ngIf="f['firstName'].errors['maxlength']">
+                                  first name must not exceed 40 characters
+                                </div>
+                              </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-2" for="">LastName:</label>
+          <input
+                                type="text"
+                                formControlName="lastName"
+                                class="form-control col-md-4"
+                                [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"
+                              />
+                              <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+                                <div *ngIf="f['lastName'].errors['required']">Last name is required</div>
+                                
+                                <div *ngIf="f['lastName'].errors['maxlength']">
+                                  Last name must not exceed 40 characters
+                                </div>
+                              </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-2" for="">Email:</label>
+          <input
+                                type="text"
+                                formControlName="email"
+                                class="form-control col-md-2"
+                                [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+                              />
+                              <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                                <div *ngIf="f['email'].errors['required']">Email is required</div>
+                                <div *ngIf="f['email'].errors['email']">Email is invalid</div>
+                              </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-2" for="">Gender:</label>
+          <select name="Gender" id="gender"  formControlName="gender"
+          class="form-control col-md-4">
+          <option selected disabled>Select gender</option>  
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="others">Others</option>
+            </select>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-2" for="">Age:</label>
+          <input
+                                type="number"
+                                min="0"
+                                formControlName="age"
+                                class="form-control col-md-4"
+                               
+                              />
+        </div>
+        <div class="form-group row">
+          <label class="col-md-2" for="">Date:</label>
+          <input
+          type="date"
+          formControlName="date"
+          class="form-control col-md-4"
+          [ngClass]="{ 'is-invalid': submitted && f['date'].errors }"
+        />
+        <div *ngIf="submitted && f['date'].errors" class="invalid-feedback">
+          <div *ngIf="f['date'].errors['required']">date is required</div>
+        </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-2" for="">Time:</label>
+          <input
+          type="time"
+          formControlName="time"
+          class="form-control col-md-2"
+          [ngClass]="{ 'is-invalid': submitted && f['time'].errors }"
+        />
+        <div *ngIf="submitted && f['time'].errors" class="invalid-feedback">
+          <div *ngIf="f['time'].errors['required']">time is required</div>
+        </div>
+        </div>
+
+        <div class="form-group mt-2">
+          <button type="submit" class="btn btn-primary" >Create </button>
+         
+        </div>
+    </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="refresh()" data-bs-dismiss="modal">Close</button>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  
